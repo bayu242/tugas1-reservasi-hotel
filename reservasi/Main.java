@@ -137,6 +137,7 @@ public class Main {
     public void cetakStrukBooking(ReservasiKamar data_booking[]) {
         int index = 0;
         double total_biaya = 0;
+        boolean freeLaunch = false;
         for (ReservasiKamar booking : data_booking) {
             index++;
             if (booking != null) {
@@ -151,14 +152,28 @@ public class Main {
         System.out.println(
                 "-----------------------------------------------------------------------------------------------------");
         System.out.println("Total\t\t\t\t\t\t\t\t\t\t\t: " + tools.formatRupiah(total_biaya));
+
+        // Gratis sarapan untuk semua tamu jika total biaya reservasi melebihi Rp.
+        // 300.000,-.
+        if (total_biaya > 300000) {
+            freeLaunch = true;
+        }
+
+        // Diskon 15% jika total biaya reservasi melebihi Rp. 500.000,-.
         if (total_biaya > 500000) {
             double harga_diskon = diskon(total_biaya);
             System.out.println("Diskon\t\t\t\t\t\t\t\t\t\t\t: 15%");
             total_biaya = harga_diskon;
         }
+
+        // Pajak sebesar 10% dari total biaya reservasi.
         total_biaya = pajak(total_biaya);
         System.out.println("Pajak\t\t\t\t\t\t\t\t\t\t\t: 10%");
         System.out.println("Total Biaya Booking\t\t\t\t\t\t\t\t\t: " + tools.formatRupiah(total_biaya));
+
+        if(freeLaunch){
+            System.out.println("\nSelamat anda mendapatkan makan siang gratis karena total biaya reservasi lebih dari Rp300.000,00");
+        }
 
     }
 
